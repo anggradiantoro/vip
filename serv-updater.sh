@@ -3,88 +3,20 @@ dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Dat
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
 
-BURIQ () {
-    curl -sS https://raw.githubusercontent.com/kenDevXD/src/main/ip > /root/tmp
-    data=( `cat /root/tmp | grep -E "^### " | awk '{print $2}'` )
-    for user in "${data[@]}"
-    do
-    exp=( `grep -E "^### $user" "/root/tmp" | awk '{print $3}'` )
-    d1=(`date -d "$exp" +%s`)
-    d2=(`date -d "$biji" +%s`)
-    exp2=$(( (d1 - d2) / 86400 ))
-    if [[ "$exp2" -le "0" ]]; then
-    echo $user > /etc/.$user.ini
-    else
-    rm -f /etc/.$user.ini > /dev/null 2>&1
-    fi
-    done
-    rm -f /root/tmp
-}
-
-MYIP=$(curl -sS ipv4.icanhazip.com)
-Name=$(curl -sS https://raw.githubusercontent.com/kenDevXD/src/main/ip | grep $MYIP | awk '{print $2}')
-echo $Name > /usr/local/etc/.$Name.ini
-CekOne=$(cat /usr/local/etc/.$Name.ini)
-
-Bloman () {
-if [ -f "/etc/.$Name.ini" ]; then
-CekTwo=$(cat /etc/.$Name.ini)
-    if [ "$CekOne" = "$CekTwo" ]; then
-        res="Expired"
-    fi
+#license
+echo -e "============================================="
+echo -e " ${GREEN} SCRIPT LICENSE${NC}"
+echo -e "============================================="
+sleep 2
+read -p "SILA MASUKKAN LESEN SCRIPT: " pwd
+if test $pwd == "bagoesvpn"; then
+echo "Password Accepted!"
 else
-res="Permission Accepted..."
+echo "Password Incorrect!"
+rm -f setup.sh
+sleep 2
+exit
 fi
-}
-
-PERMISSION () {
-    MYIP=$(curl -sS ipv4.icanhazip.com)
-    IZIN=$(curl -sS https://raw.githubusercontent.com/kenDevXD/src/main/ip | awk '{print $4}' | grep $MYIP)
-    if [ "$MYIP" = "$IZIN" ]; then
-    Bloman
-    else
-    res="Permission Denied!"
-    fi
-    BURIQ
-}
-
-red='\e[1;31m'
-green='\e[1;32m'
-yell='\e[1;33m'
-NC='\e[0m'
-green() { echo -e "\\033[32;1m${*}\\033[0m"; }
-red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-PERMISSION
-
-if [ -f /home/needupdate ]; then
-echo -ne
-else
-red "Permission Denied!"
-exit 0
-fi
-
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-
-mesg n || true
-clear
-screen -r upds
-END
-chmod 644 /root/.profile
-
-if [ -d "/etc/user-update/" ]; then
-rm -rf /etc/user-update/ > /dev/null 2>&1
-fi
-
-MYIP=$(curl -sS ipv4.icanhazip.com)
-NameUser=$(curl -sS https://raw.githubusercontent.com/kenDevXD/src/main/ip | grep $MYIP | awk '{print $2}')
-cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 clear
 
 serverV=$( curl -sS https://raw.githubusercontent.com/scvps/perizinan/main/versi  )
@@ -101,7 +33,7 @@ else
 clear
 fi
 systemctl stop cron > /dev/null 2>&1
-curl -sS https://raw.githubusercontent.com/kenDevXD/vip/main/resources/ascii-home
+curl -sS https://raw.githubusercontent.com/anggradiantoro/vip/main/resources/ascii-home
 echo
 sleep 1
 date
@@ -113,58 +45,58 @@ sleep 1
 #update ssh
 Updater_ALL () {
 echo -e "[ ${green}INFO${NC} ] Updating ssh ..."
-    wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/usernew.sh" && chmod +x /usr/bin/usernew
-    wget -q -O /usr/bin/trial "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/trial.sh" && chmod +x /usr/bin/trial
-    wget -q -O /usr/bin/hapus "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/hapus.sh" && chmod +x /usr/bin/hapus
-    wget -q -O /usr/bin/member "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/member.sh" && chmod +x /usr/bin/member
-    wget -q -O /usr/bin/delete "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/delete.sh" && chmod +x /usr/bin/delete
-    wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/cek.sh" && chmod +x /usr/bin/cek
-    wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/restart.sh" && chmod +x /usr/bin/restart
-    wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/renew.sh" && chmod +x /usr/bin/renew
-    wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/autokill.sh" && chmod +x /usr/bin/autokill
-    wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/ceklim.sh" && chmod +x /usr/bin/ceklim
-    wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/tendang.sh" && chmod +x /usr/bin/tendang
-    wget -q -O /usr/bin/port-dropbear "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/port-dropbear.sh" && chmod +x /usr/bin/port-dropbear
-    wget -q -O /usr/bin/port-ovpn "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/port-ovpn.sh" && chmod +x /usr/bin/port-ovpn
-    wget -q -O /usr/bin/port-ssl "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/port-ssl.sh" && chmod +x /usr/bin/port-ssl
-    wget -q -O /usr/bin/banner "https://raw.githubusercontent.com/kenDevXD/vip/main/banner/banner.sh" && chmod +x /usr/bin/banner
-    wget -q -O /usr/bin/sshws "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/ins-sshws.sh" && chmod +x /usr/bin/sshws
-    wget -q -O /usr/bin/ssh-menu "https://raw.githubusercontent.com/kenDevXD/vip/main/menu_all/ssh-menu.sh" && chmod +x /usr/bin/ssh-menu
-    wget -q -O /usr/bin/proxy3.js "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/proxy3.js"
-    wget -q -O /usr/bin/ssh-wsenabler "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/sshws-true.sh" && chmod +x /usr/bin/ssh-wsenabler
-    wget -q -O /usr/bin/port-wssl "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/port-ws-ssl.sh" && chmod +x /usr/bin/port-wssl
-    wget -q -O /usr/bin/portohp "https://raw.githubusercontent.com/kenDevXD/vip/main/ssh/portohp.sh" && chmod +x /usr/bin/portohp
+    wget -q -O /usr/bin/usernew "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/usernew.sh" && chmod +x /usr/bin/usernew
+    wget -q -O /usr/bin/trial "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/trial.sh" && chmod +x /usr/bin/trial
+    wget -q -O /usr/bin/hapus "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/hapus.sh" && chmod +x /usr/bin/hapus
+    wget -q -O /usr/bin/member "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/member.sh" && chmod +x /usr/bin/member
+    wget -q -O /usr/bin/delete "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/delete.sh" && chmod +x /usr/bin/delete
+    wget -q -O /usr/bin/cek "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/cek.sh" && chmod +x /usr/bin/cek
+    wget -q -O /usr/bin/restart "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/restart.sh" && chmod +x /usr/bin/restart
+    wget -q -O /usr/bin/renew "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/renew.sh" && chmod +x /usr/bin/renew
+    wget -q -O /usr/bin/autokill "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/autokill.sh" && chmod +x /usr/bin/autokill
+    wget -q -O /usr/bin/ceklim "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/ceklim.sh" && chmod +x /usr/bin/ceklim
+    wget -q -O /usr/bin/tendang "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/tendang.sh" && chmod +x /usr/bin/tendang
+    wget -q -O /usr/bin/port-dropbear "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/port-dropbear.sh" && chmod +x /usr/bin/port-dropbear
+    wget -q -O /usr/bin/port-ovpn "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/port-ovpn.sh" && chmod +x /usr/bin/port-ovpn
+    wget -q -O /usr/bin/port-ssl "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/port-ssl.sh" && chmod +x /usr/bin/port-ssl
+    wget -q -O /usr/bin/banner "https://raw.githubusercontent.com/anggradiantoro/vip/main/banner/banner.sh" && chmod +x /usr/bin/banner
+    wget -q -O /usr/bin/sshws "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/ins-sshws.sh" && chmod +x /usr/bin/sshws
+    wget -q -O /usr/bin/ssh-menu "https://raw.githubusercontent.com/anggradiantoro/vip/main/menu_all/ssh-menu.sh" && chmod +x /usr/bin/ssh-menu
+    wget -q -O /usr/bin/proxy3.js "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/proxy3.js"
+    wget -q -O /usr/bin/ssh-wsenabler "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/sshws-true.sh" && chmod +x /usr/bin/ssh-wsenabler
+    wget -q -O /usr/bin/port-wssl "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/port-ws-ssl.sh" && chmod +x /usr/bin/port-wssl
+    wget -q -O /usr/bin/portohp "https://raw.githubusercontent.com/anggradiantoro/vip/main/ssh/portohp.sh" && chmod +x /usr/bin/portohp
 
 echo -e "[ ${green}INFO${NC} ] Updating v2ray ..."
     if [ "$cekray" = "XRAY" ]; then
     #Update Xray
-    wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/add-ws.sh" && chmod +x /usr/bin/add-ws
-    wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/add-vless.sh" && chmod +x /usr/bin/add-vless
-    wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
-    wget -q -O /usr/bin/del-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/del-ws.sh" && chmod +x /usr/bin/del-ws
-    wget -q -O /usr/bin/del-vless "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/del-vless.sh" && chmod +x /usr/bin/del-vless
-    wget -q -O /usr/bin/del-tr "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/del-tr.sh" && chmod +x /usr/bin/del-tr
-    wget -q -O /usr/bin/cek-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/cek-ws.sh" && chmod +x /usr/bin/cek-ws
-    wget -q -O /usr/bin/cek-vless "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/cek-vless.sh" && chmod +x /usr/bin/cek-vless
-    wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/cek-tr.sh" && chmod +x /usr/bin/cek-tr
-    wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/renew-ws.sh" && chmod +x /usr/bin/renew-ws
-    wget -q -O /usr/bin/renew-vless "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/renew-vless.sh" && chmod +x /usr/bin/renew-vless
-    wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/renew-tr.sh" && chmod +x /usr/bin/renew-tr
-    wget -q -O /usr/bin/trial-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/trial-ws.sh" && chmod +x /usr/bin/trial-ws
-    wget -q -O /usr/bin/trial-vless "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/trial-vless.sh" && chmod +x /usr/bin/trial-vless
-    wget -q -O /usr/bin/trial-tr "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/trial-tr.sh" && chmod +x /usr/bin/trial-tr
-    wget -q -O /usr/bin/port-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/port-ws.sh" && chmod +x /usr/bin/port-ws
-    wget -q -O /usr/bin/port-vless "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/port-vless.sh" && chmod +x /usr/bin/port-vless
-    wget -q -O /usr/bin/port-tr "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/port-tr.sh" && chmod +x /usr/bin/port-tr
-    wget -q -O /usr/bin/renewcert "https://raw.githubusercontent.com/kenDevXD/vip/main/xray/cert.sh" && chmod +x /usr/bin/renewcert
-    wget -q -O /usr/bin/add-trgo "https://raw.githubusercontent.com/kenDevXD/vip/main/trojan/add-trgo.sh" && chmod +x /usr/bin/add-trgo
-    wget -q -O /usr/bin/renew-trgo "https://raw.githubusercontent.com/kenDevXD/vip/main/trojan/renew-trgo.sh" && chmod +x /usr/bin/renew-trgo
-    wget -q -O /usr/bin/cek-trgo "https://raw.githubusercontent.com/kenDevXD/vip/main/trojan/cek-trgo.sh" && chmod +x /usr/bin/cek-trgo
-    wget -q -O /usr/bin/del-trgo "https://raw.githubusercontent.com/kenDevXD/vip/main/trojan/del-trgo.sh" && chmod +x /usr/bin/del-trgo
-    wget -q -O /usr/bin/trial-trgo "https://raw.githubusercontent.com/kenDevXD/vip/main/trojan/trial-trgo.sh" && chmod +x /usr/bin/trial-trgo
-    wget -q -O /usr/bin/port-trgo "https://raw.githubusercontent.com/kenDevXD/vip/main/trojan/port-trgo.sh" && chmod +x /usr/bin/port-trgo
-    wget -q -O /usr/bin/v2ray-menu "https://raw.githubusercontent.com/kenDevXD/vip/main/menu_all/v2ray-menu.sh" && chmod +x /usr/bin/v2ray-menu
-    wget -q -O /usr/bin/trojan-menu "https://raw.githubusercontent.com/kenDevXD/vip/main/menu_all/trojan-menu.sh" && chmod +x /usr/bin/trojan-menu
+    wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/add-ws.sh" && chmod +x /usr/bin/add-ws
+    wget -q -O /usr/bin/add-vless "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/add-vless.sh" && chmod +x /usr/bin/add-vless
+    wget -q -O /usr/bin/add-tr "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/add-tr.sh" && chmod +x /usr/bin/add-tr
+    wget -q -O /usr/bin/del-ws "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/del-ws.sh" && chmod +x /usr/bin/del-ws
+    wget -q -O /usr/bin/del-vless "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/del-vless.sh" && chmod +x /usr/bin/del-vless
+    wget -q -O /usr/bin/del-tr "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/del-tr.sh" && chmod +x /usr/bin/del-tr
+    wget -q -O /usr/bin/cek-ws "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/cek-ws.sh" && chmod +x /usr/bin/cek-ws
+    wget -q -O /usr/bin/cek-vless "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/cek-vless.sh" && chmod +x /usr/bin/cek-vless
+    wget -q -O /usr/bin/cek-tr "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/cek-tr.sh" && chmod +x /usr/bin/cek-tr
+    wget -q -O /usr/bin/renew-ws "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/renew-ws.sh" && chmod +x /usr/bin/renew-ws
+    wget -q -O /usr/bin/renew-vless "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/renew-vless.sh" && chmod +x /usr/bin/renew-vless
+    wget -q -O /usr/bin/renew-tr "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/renew-tr.sh" && chmod +x /usr/bin/renew-tr
+    wget -q -O /usr/bin/trial-ws "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/trial-ws.sh" && chmod +x /usr/bin/trial-ws
+    wget -q -O /usr/bin/trial-vless "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/trial-vless.sh" && chmod +x /usr/bin/trial-vless
+    wget -q -O /usr/bin/trial-tr "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/trial-tr.sh" && chmod +x /usr/bin/trial-tr
+    wget -q -O /usr/bin/port-ws "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/port-ws.sh" && chmod +x /usr/bin/port-ws
+    wget -q -O /usr/bin/port-vless "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/port-vless.sh" && chmod +x /usr/bin/port-vless
+    wget -q -O /usr/bin/port-tr "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/port-tr.sh" && chmod +x /usr/bin/port-tr
+    wget -q -O /usr/bin/renewcert "https://raw.githubusercontent.com/anggradiantoro/vip/main/xray/cert.sh" && chmod +x /usr/bin/renewcert
+    wget -q -O /usr/bin/add-trgo "https://raw.githubusercontent.com/anggradiantoro/vip/main/trojan/add-trgo.sh" && chmod +x /usr/bin/add-trgo
+    wget -q -O /usr/bin/renew-trgo "https://raw.githubusercontent.com/anggradiantoro/vip/main/trojan/renew-trgo.sh" && chmod +x /usr/bin/renew-trgo
+    wget -q -O /usr/bin/cek-trgo "https://raw.githubusercontent.com/anggradiantoro/vip/main/trojan/cek-trgo.sh" && chmod +x /usr/bin/cek-trgo
+    wget -q -O /usr/bin/del-trgo "https://raw.githubusercontent.com/anggradiantoro/vip/main/trojan/del-trgo.sh" && chmod +x /usr/bin/del-trgo
+    wget -q -O /usr/bin/trial-trgo "https://raw.githubusercontent.com/anggradiantoro/vip/main/trojan/trial-trgo.sh" && chmod +x /usr/bin/trial-trgo
+    wget -q -O /usr/bin/port-trgo "https://raw.githubusercontent.com/anggradiantoro/vip/main/trojan/port-trgo.sh" && chmod +x /usr/bin/port-trgo
+    wget -q -O /usr/bin/v2ray-menu "https://raw.githubusercontent.com/anggradiantoro/vip/main/menu_all/v2ray-menu.sh" && chmod +x /usr/bin/v2ray-menu
+    wget -q -O /usr/bin/trojan-menu "https://raw.githubusercontent.com/anggradiantoro/vip/main/menu_all/trojan-menu.sh" && chmod +x /usr/bin/trojan-menu
     else
     #Update v2ray
     wget -q -O /usr/bin/add-ws "https://raw.githubusercontent.com/kenDevXD/vip/main/v2ray/add-ws.sh" && chmod +x /usr/bin/add-ws
